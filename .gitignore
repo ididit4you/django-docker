@@ -1,0 +1,12 @@
+node_modules
+app/media/
+app/files/
+app/**/__pycache__/
+# !src/*/migrations
+app/*/migrations/*.py
+!app/*/migrations/__init__.py
+
+*.sqlite3
+*.docx
+*.code-workspace
+*.vscode

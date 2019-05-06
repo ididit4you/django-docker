@@ -1,0 +1,8 @@
+.git
+**/__pycache__/*
+files/*
+media/*
+*/migrations/*.py
+!*/migrations/__init__.py
+Dockerfile
+db.sqlite3

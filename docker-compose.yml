@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  djangoapp:
+    restart: always
+    build: ./app
+    volumes:
+      - ./app:/web/app
+      - static_volume:/web/app/files  # <-- bind the static volume
+      - media_volume:/web/app/media   # <-- bind the media volume
+    environment:
+      ENV: 'DEV'
+    networks:
+      - nginx_network
+    command: "/web/app/cmd.sh"
+
+  nginx:
+    restart: always 
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/web/app/files  # <-- bind the static volume
+      - media_volume:/web/app/media  # <-- bind the media volume
+    depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
+      - djangoapp
+    networks:
+      - nginx_network
+
+networks:  # <-- and here
+  nginx_network:
+    driver: bridge
+
+volumes:
+  static_volume:  # <-- declare the static volume
+  media_volume:  # <-- declare the media volume  
+
