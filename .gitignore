@@ -1,9 +1,9 @@
 node_modules
-app/media/*
-app/files/*
-app/**/__pycache__/
-app/*/migrations/*.py
-!app/*/migrations/__init__.py
+app/src/media/*
+app/src/files/*
+app/src/**/__pycache__/
+app/src/*/migrations/*.py
+!app/src/*/migrations/__init__.py
 
 *.sqlite3
 *.docx
