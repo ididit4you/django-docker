@@ -8,6 +8,6 @@ COPY cmd.sh /app
 
 RUN python -m pip install -r /web/app/requirements.txt
 
-WORKDIR /web/app/
+WORKDIR /web/app/src
 
 CMD ["cmd.sh"]

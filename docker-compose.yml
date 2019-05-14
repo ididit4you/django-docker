@@ -6,8 +6,8 @@ services:
     build: ./app
     volumes:
       - ./app:/web/app
-      - static_volume:/web/app/files  # <-- bind the static volume
-      - media_volume:/web/app/media   # <-- bind the media volume
+      - static_volume:/web/app/src/files  # <-- bind the static volume
+      - media_volume:/web/app/src/media   # <-- bind the media volume
     environment:
       ENV: 'DEV'
     networks:
@@ -20,8 +20,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - static_volume:/web/app/files  # <-- bind the static volume
-      - media_volume:/web/app/media  # <-- bind the media volume
+      - static_volume:/web/app/src/files  # <-- bind the static volume
+      - media_volume:/web/app/src/media  # <-- bind the media volume
     depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
       - djangoapp
     networks:
