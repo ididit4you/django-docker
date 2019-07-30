@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST_1')]
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST')]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps
 ]
 
 MIDDLEWARE = [
@@ -113,8 +114,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -122,14 +121,23 @@ USE_TZ = True
 FILEBROWSER_DIRECTORY = ''
 DIRECTORY = ''
 
-STATIC_URL          = '/files/'
-MEDIA_URL           = '/media/'
-
 STATICFILES_DIRS    = [
     os.path.join(os.path.join(BASE_DIR, "static")),
-    os.path.join(os.path.join(BASE_DIR, "media")),
     os.path.join(BASE_DIR, 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "files")
-MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, "media"))
+FILES_PATH = Path(BASE_DIR).parent.joinpath('files').resolve()
+
+STATIC_ROOT = FILES_PATH.joinpath('static').resolve()
+STATIC_URL = '/files/'
+
+MEDIA_ROOT = FILES_PATH.joinpath('media').resolve()
+MEDIA_URL = '/media/'
+
+# CELERY STUFF
+CELERY_BROKER_URL = 'redis'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -20,14 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9ktx1)^h@s6cji2m(muomfu$2f_q8_fb_j07zztv%og+r*)6c='
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),]
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # apps
 ]
 
 MIDDLEWARE = [
@@ -130,20 +130,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
+USE_L10N = False
 
+LANGUAGE_CODE = 'ru-RU'
+DATE_FORMAT = 'd E Y'
+TIME_ZONE = 'Europe/Moscow'
+USE_I18N = True
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -152,17 +150,24 @@ USE_TZ = True
 FILEBROWSER_DIRECTORY = ''
 DIRECTORY = ''
 
-STATIC_URL          = '/files/'
-STATIC_ROOT = os.path.join(BASE_DIR, "files")
-
-MEDIA_URL           = '/media/'
-MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, "media"))
-
 STATICFILES_DIRS    = [
     os.path.join(os.path.join(BASE_DIR, "static")),
-    os.path.join(os.path.join(BASE_DIR, "media")),
     os.path.join(BASE_DIR, 'static'),
 ]
 
+FILES_PATH = Path(BASE_DIR).parent.joinpath('files').resolve()
+
+STATIC_ROOT = FILES_PATH.joinpath('static').resolve()
+STATIC_URL = '/files/'
+
+MEDIA_ROOT = FILES_PATH.joinpath('media').resolve()
+MEDIA_URL = '/media/'
 
 
+# CELERY STUFF
+CELERY_BROKER_URL = 'redis:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'

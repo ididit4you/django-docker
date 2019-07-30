@@ -1,17 +1,17 @@
-version: '3'
+version: '2'
 
 services:
   djangoapp:
     restart: always
     build: ./app
     volumes:
-      - ./app/src:/web/app/src
       - static_volume:/web/app/files/static  # <-- bind the static volume
       - media_volume:/web/app/files/media   # <-- bind the media volume
     env_file: 
-      - ./env/dev.env
+      - ./env/prod.env
     networks:
       - nginx_network
+      - redis_network
     command: "/web/app/cmd.sh"
 
   nginx:
@@ -27,10 +27,25 @@ services:
     networks:
       - nginx_network
 
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - redis_network
+
+
 networks:  # <-- and here
   nginx_network:
+    driver: bridge
+  redis_network:
     driver: bridge
 
 volumes:
   static_volume:  # <-- declare the static volume
-  media_volume:  # <-- declare the media volume  
+  media_volume:  # <-- declare the media volume 
+  redis_data: # <-- declare the redis volume 
+

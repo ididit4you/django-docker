@@ -1,4 +1,8 @@
 Django==2.2
+redis==3.2.1
+django-celery-beat==1.5.0
+django-celery-results==1.1.0
 gunicorn
 django-debug-toolbar
 psycopg2-binary
+
