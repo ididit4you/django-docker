@@ -4,10 +4,8 @@ try:
 except KeyError:
     DEVELOP = False
 
-print (DEVELOP)
-
 if DEVELOP:
-    print ('DEVELOP')
+    print ('DEV')
     from .develop import *
 else:
     print ('PRO')
