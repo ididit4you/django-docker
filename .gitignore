@@ -9,3 +9,4 @@ app/src/*/migrations/*.py
 *.docx
 *.code-workspace
 *.vscode
+

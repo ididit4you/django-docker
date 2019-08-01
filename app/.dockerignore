@@ -1,4 +1,6 @@
 .git
+.vscode
+node_modules
 src/**/__pycache__/*
 src/files/*
 src/media/*

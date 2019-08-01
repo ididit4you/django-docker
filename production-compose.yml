@@ -6,7 +6,7 @@ services:
     build: ./app
     volumes:
       - static_volume:/web/app/files/static  # <-- bind the static volume
-      - media_volume:/web/app/files/media   # <-- bind the media volume
+      - media_volume:/web/app/files/media  # <-- bind the media volume
     env_file: 
       - ./env/prod.env
     networks:
@@ -30,8 +30,6 @@ services:
   redis:
     restart: always
     image: redis:latest
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -47,5 +45,5 @@ networks:  # <-- and here
 volumes:
   static_volume:  # <-- declare the static volume
   media_volume:  # <-- declare the media volume 
-  redis_data: # <-- declare the redis volume 
+  redis_data:  # <-- declare the redis volume 
 
