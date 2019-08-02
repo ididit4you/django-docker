@@ -10,6 +10,7 @@ services:
       - media_volume:/web/app/files/media   # <-- bind the media volume
     env_file: 
       - ./env/dev.env
+      - ./env/db.env
     networks:
       - nginx_network
       - database_network
@@ -31,6 +32,8 @@ services:
   database:
     restart: always
     image: postgres:latest
+    env_file: 
+      - ./env/db.env
     volumes:
       - database_data:/var/lib/postgresql/data/
     networks:

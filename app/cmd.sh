@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+python manage.py collectstatic --noinput
+
 if [ "$ENV" = 'DEV' ]; then
     echo "DEVELOP"
     exec python manage.py runserver 0.0.0.0:8000
