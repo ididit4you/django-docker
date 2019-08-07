@@ -15,6 +15,9 @@ services:
       - nginx_network
       - database_network
     command: "/web/app/cmd.sh"
+    depends_on:
+      - database
+      - redis
 
   nginx:
     restart: always 
