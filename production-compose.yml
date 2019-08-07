@@ -15,6 +15,9 @@ services:
       - redis_network
       - database_network
     command: "/web/app/cmd.sh"
+    depends_on:
+      - database
+      - redis
 
   nginx:
     restart: always 
@@ -24,8 +27,6 @@ services:
     volumes:
       - static_volume:/web/app/files/static  # <-- bind the static volume
       - media_volume:/web/app/files/media  # <-- bind the media volume
-    depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
-      - djangoapp
     networks:
       - nginx_network
 
