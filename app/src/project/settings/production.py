@@ -31,8 +31,6 @@ ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST')]
 # Application definition
 
 INSTALLED_APPS = [
-    # custom accounts 
-    'accounts',
     # Django starter
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    # custom accounts 
+    'accounts',
     # apps
+    # ...
 ]
 
 AUTH_USER_MODEL = 'accounts.ProjectUser'
